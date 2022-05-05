@@ -14,3 +14,9 @@ dependencyResolutionManagement {
 }
 rootProject.name = "PunkBeers"
 include ':app'
+include ':core'
+include ':catalog'
+include ':catalog:catalog_presentation'
+include ':catalog:catalog_domain'
+include ':catalog:catalog_data'
+include ':core-ui'
