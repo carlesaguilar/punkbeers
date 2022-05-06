@@ -9,10 +9,12 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import dev.carlesav.catalog_domain.model.Beer
+import dev.carlesav.core.R
 import dev.carlesav.core_ui.LocalSpacing
 
 @Composable
@@ -35,20 +37,31 @@ fun CatalogItem(
             .padding(spacing.spaceSmall)
         ) {
             Column {
-                Image(
-                    modifier = Modifier
-                        .width(100.dp)
-                        .height(150.dp),
-                    painter = rememberImagePainter(
-                        data = item.image_url,
-                        builder = {
-                            /*placeholder(R.drawable.placeholder)
-                            error(R.drawable.placeholder)*/
-                        }
-                    ),
-                    contentDescription = null,
-                    contentScale = ContentScale.Inside
-                )
+                if (item.image_url != null) {
+                    Image(
+                        modifier = Modifier
+                            .width(100.dp)
+                            .height(150.dp),
+                        painter = rememberImagePainter(
+                            data = item.image_url,
+                            builder = {
+                                placeholder(R.drawable.placeholder)
+                                error(R.drawable.placeholder)
+                            }
+                        ),
+                        contentDescription = null,
+                        contentScale = ContentScale.Inside
+                    )
+                } else {
+                    Image(
+                        modifier = Modifier
+                            .width(100.dp)
+                            .height(150.dp),
+                        painter = painterResource(id = R.drawable.placeholder),
+                        contentDescription = null,
+                        contentScale = ContentScale.Inside
+                    )
+                }
             }
 
             Column(

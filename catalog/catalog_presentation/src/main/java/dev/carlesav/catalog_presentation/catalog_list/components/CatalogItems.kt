@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import dev.carlesav.catalog_domain.model.Beer
 import dev.carlesav.core_ui.LocalSpacing
 
@@ -43,7 +44,7 @@ fun CatalogItems(items: List<Beer>) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("No results.",
+            Text(text = stringResource(id = dev.carlesav.core.R.string.no_results),
                 style = MaterialTheme.typography.h5,
                 color = Color.White)
         }

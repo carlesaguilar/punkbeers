@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">PunkBeers</string>
+    <string name="search_placeholder">Search…</string>
+    <string name="no_results">No results</string>
+</resources>

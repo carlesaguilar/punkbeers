@@ -14,9 +14,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import dev.carlesav.core.R
 
 @Composable
 fun SearchBar(onQueryChange: (String) -> Unit) {
@@ -36,7 +38,7 @@ fun SearchBar(onQueryChange: (String) -> Unit) {
         },
         singleLine = true,
         placeholder = {
-            Text("Search...")
+            Text(stringResource(id = R.string.search_placeholder))
         },
         trailingIcon = {
             Icon(imageVector = Icons.Default.Search,
