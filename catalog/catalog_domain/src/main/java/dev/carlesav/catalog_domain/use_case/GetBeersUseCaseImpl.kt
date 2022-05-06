@@ -8,8 +8,7 @@ import javax.inject.Inject
 
 class GetBeersUseCaseImpl @Inject constructor(
     private val repository: PunkRepository,
-) : GetBeersUseCase {
-
+) : FlowResourceUseCase<List<Beer>> {
     override fun invoke(): Flow<Resource<List<Beer>>> {
         return repository.getBeers()
     }
