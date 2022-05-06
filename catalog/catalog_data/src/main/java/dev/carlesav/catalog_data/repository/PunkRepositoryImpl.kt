@@ -13,9 +13,10 @@ class PunkRepositoryImpl(
     private val api: PunkApi,
 ) : PunkRepository {
     override fun getBeers(): Flow<Resource<List<Beer>>> = flow {
-        emit(Resource.Loading())
+        emit(Resource.Loading(isLoading = true))
 
         val response = api.getBeers()
+        emit(Resource.Loading(isLoading = false))
         if (response.isSuccessful) {
             val responseMap = response.body()?.map { it.toBeer() } ?: emptyList()
             emit(Resource.Success(responseMap))

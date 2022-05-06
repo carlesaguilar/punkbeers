@@ -1,5 +1,8 @@
 package dev.carlesav.catalog_presentation.catalog_list
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,16 +16,32 @@ import javax.inject.Inject
 class CatalogListViewModel @Inject constructor(
     private val getBeersUseCase: GetBeersUseCaseImpl,
 ) : ViewModel() {
-    fun getBeers() {
+    var state by mutableStateOf(CatalogListState())
+
+    init {
+        getBeers()
+    }
+
+    private fun getBeers() {
         getBeersUseCase().onEach { result ->
-            when (result) {
+            state = when (result) {
                 is Resource.Loading -> {
+                    state.copy(isLoading = result.isLoading)
                 }
                 is Resource.Success -> {
+                    state.copy(items = result.data ?: emptyList())
                 }
                 is Resource.Error -> {
+                    state.copy(error = result.message.toString())
                 }
             }
         }.launchIn(viewModelScope)
+    }
+
+    fun onEvent(event: CatalogListEvents) {
+        when (event) {
+            is CatalogListEvents.OnSearchQueryChange -> {
+            }
+        }
     }
 }
