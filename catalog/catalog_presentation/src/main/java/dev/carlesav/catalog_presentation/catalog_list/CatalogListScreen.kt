@@ -45,6 +45,7 @@ fun CatalogListScreen(
                     value = searchFieldState,
                     onValueChange = {
                         searchFieldState = it
+                        viewModel.onEvent(CatalogListEvents.OnSearchQueryChange(searchFieldState))
                     },
                     singleLine = true,
                     placeholder = {
@@ -61,6 +62,7 @@ fun CatalogListScreen(
                     ),
                     keyboardActions = KeyboardActions(onSearch = { focusManager.clearFocus() }),
                     colors = TextFieldDefaults.textFieldColors(
+                        textColor = Color.DarkGray,
                         unfocusedIndicatorColor = Color.Transparent,
                         focusedIndicatorColor = Color.Transparent
                     )
@@ -74,18 +76,16 @@ fun CatalogListScreen(
                 .fillMaxSize()
                 .background(Color.DarkGray),
         ) {
-
-        }
-
-        when {
-            state.isLoading -> {
-                LoadingComponent(modifier = Modifier.fillMaxSize())
-            }
-            state.items.isNotEmpty() -> {
-                CatalogItems(state.items)
-            }
-            state.error.isNotEmpty() -> {
-                ErrorComponent(message = state.error)
+            when {
+                state.isLoading -> {
+                    LoadingComponent(modifier = Modifier.fillMaxSize())
+                }
+                state.error.isNotEmpty() -> {
+                    ErrorComponent(message = state.error)
+                }
+                else -> {
+                    CatalogItems(state.items)
+                }
             }
         }
     }

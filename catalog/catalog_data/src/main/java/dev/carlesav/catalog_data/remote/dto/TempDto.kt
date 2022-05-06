@@ -6,5 +6,5 @@ data class TempDto(
     @field:Json(name = "unit")
     val unit: String,
     @field:Json(name = "value")
-    val value: Int,
+    val value: Int?,
 )

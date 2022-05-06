@@ -12,10 +12,14 @@ import org.json.JSONObject
 class PunkRepositoryImpl(
     private val api: PunkApi,
 ) : PunkRepository {
-    override fun getBeers(): Flow<Resource<List<Beer>>> = flow {
+    override fun getBeers(query: String): Flow<Resource<List<Beer>>> = flow {
         emit(Resource.Loading(isLoading = true))
 
-        val response = api.getBeers()
+        val response = if (query.isEmpty()) {
+            api.getBeers()
+        } else {
+            api.searchBeers(query)
+        }
         emit(Resource.Loading(isLoading = false))
         if (response.isSuccessful) {
             val responseMap = response.body()?.map { it.toBeer() } ?: emptyList()

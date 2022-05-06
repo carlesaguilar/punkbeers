@@ -8,8 +8,11 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.carlesav.catalog_domain.use_case.GetBeersUseCaseImpl
 import dev.carlesav.core.util.Resource
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -18,12 +21,14 @@ class CatalogListViewModel @Inject constructor(
 ) : ViewModel() {
     var state by mutableStateOf(CatalogListState())
 
+    private var searchJob: Job? = null
+
     init {
-        getBeers()
+        getBeers(state.searchQuery)
     }
 
-    private fun getBeers() {
-        getBeersUseCase().onEach { result ->
+    private fun getBeers(query: String) {
+        getBeersUseCase(query).onEach { result ->
             state = when (result) {
                 is Resource.Loading -> {
                     state.copy(isLoading = result.isLoading)
@@ -41,6 +46,11 @@ class CatalogListViewModel @Inject constructor(
     fun onEvent(event: CatalogListEvents) {
         when (event) {
             is CatalogListEvents.OnSearchQueryChange -> {
+                searchJob?.cancel()
+                searchJob = viewModelScope.launch {
+                    delay(500L)
+                    getBeers(event.query)
+                }
             }
         }
     }

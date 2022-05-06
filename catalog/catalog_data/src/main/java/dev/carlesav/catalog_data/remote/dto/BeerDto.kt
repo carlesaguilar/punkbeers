@@ -16,7 +16,7 @@ data class BeerDto(
     @field:Json(name = "description")
     val description: String,
     @field:Json(name = "ebc")
-    val ebc: Int?,
+    val ebc: Double?,
     @field:Json(name = "first_brewed")
     val first_brewed: String,
     @field:Json(name = "food_pairing")
@@ -26,7 +26,7 @@ data class BeerDto(
     @field:Json(name = "id")
     val id: Int,
     @field:Json(name = "image_url")
-    val image_url: String,
+    val image_url: String?,
     @field:Json(name = "ingredients")
     val ingredients: IngredientsDto,
     @field:Json(name = "method")
@@ -40,7 +40,7 @@ data class BeerDto(
     @field:Json(name = "tagline")
     val tagline: String,
     @field:Json(name = "target_fg")
-    val target_fg: Int,
+    val target_fg: Double,
     @field:Json(name = "target_og")
     val target_og: Double,
     @field:Json(name = "volume")
