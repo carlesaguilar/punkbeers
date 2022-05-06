@@ -1,11 +1,13 @@
 package dev.carlesav.catalog_data.repository
 
 import dev.carlesav.catalog_data.remote.PunkApi
+import dev.carlesav.catalog_data.remote.mapper.toBeer
 import dev.carlesav.catalog_domain.model.Beer
 import dev.carlesav.catalog_domain.repository.PunkRepository
 import dev.carlesav.core.util.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import org.json.JSONObject
 
 class PunkRepositoryImpl(
     private val api: PunkApi,
@@ -15,9 +17,12 @@ class PunkRepositoryImpl(
 
         val response = api.getBeers()
         if (response.isSuccessful) {
-            // todo map response and emit it
+            val responseMap = response.body()?.map { it.toBeer() } ?: emptyList()
+            emit(Resource.Success(responseMap))
         } else {
-            // todo catch error and emit it
+            val jsonError = JSONObject(response.errorBody()?.string())
+            val message = "${jsonError.get("error")}: ${jsonError.get("message")}"
+            emit(Resource.Error(message))
         }
     }
 }

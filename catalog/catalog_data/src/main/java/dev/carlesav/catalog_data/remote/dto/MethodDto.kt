@@ -8,5 +8,5 @@ data class MethodDto(
     @field:Json(name = "mash_temp")
     val mash_temp: List<MashTempDto>,
     @field:Json(name = "twist")
-    val twist: String,
+    val twist: String?,
 )
