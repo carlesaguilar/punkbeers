@@ -13,12 +13,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import dev.carlesav.catalog_domain.model.Beer
 import dev.carlesav.catalog_presentation.catalog_list.CatalogListState
 import dev.carlesav.core_ui.LocalSpacing
 
 @Composable
 fun CatalogItems(
     state: CatalogListState,
+    onItemClick: (Beer) -> Unit,
     endReached: (Boolean) -> Unit,
 ) {
     val spacing = LocalSpacing.current
@@ -41,8 +43,8 @@ fun CatalogItems(
                     Log.d("XXX", "*** endReached")
                     endReached(true)
                 }
-                CatalogItem(item = state.items[index]) {
-                    // todo click
+                CatalogItem(item = state.items[index]) { beer ->
+                    onItemClick(beer)
                 }
             }
             item {

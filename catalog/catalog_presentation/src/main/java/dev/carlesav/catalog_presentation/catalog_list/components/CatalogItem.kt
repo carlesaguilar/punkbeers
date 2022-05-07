@@ -29,7 +29,7 @@ fun CatalogItem(
             .padding(spacing.spaceSmall)
             .fillMaxWidth()
             .clickable {
-                //onCharacterClick(character)
+                onItemClick(item)
             }
     ) {
         Row(modifier = Modifier

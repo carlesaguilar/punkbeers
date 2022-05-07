@@ -30,4 +30,19 @@ class PunkRepositoryImpl(
             emit(Resource.Error(message))
         }
     }
+
+    override fun getBeerDetail(beerId: Int): Flow<Resource<Beer>> = flow {
+        emit(Resource.Loading(isLoading = true))
+
+        val response = api.getBeerDetail(beerId)
+        emit(Resource.Loading(isLoading = false))
+        if (response.isSuccessful) {
+            val beer = response.body()?.get(0)!!.toBeer()
+            emit(Resource.Success(beer))
+        } else {
+            val jsonError = JSONObject(response.errorBody()?.string())
+            val message = "${jsonError.get("error")}: ${jsonError.get("message")}"
+            emit(Resource.Error(message))
+        }
+    }
 }
