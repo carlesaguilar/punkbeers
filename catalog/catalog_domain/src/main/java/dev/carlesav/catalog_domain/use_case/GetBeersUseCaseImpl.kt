@@ -9,7 +9,7 @@ import javax.inject.Inject
 class GetBeersUseCaseImpl @Inject constructor(
     private val repository: PunkRepository,
 ) : GetBeersUseCase<List<Beer>> {
-    override fun invoke(query: String): Flow<Resource<List<Beer>>> {
-        return repository.getBeers(query = query)
+    override fun invoke(query: String, page: Int): Flow<Resource<List<Beer>>> {
+        return repository.getBeers(query = query, page = page)
     }
 }

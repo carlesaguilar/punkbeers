@@ -8,5 +8,5 @@ data class IngredientsDto(
     @field:Json(name = "malt")
     val malt: List<MaltDto>,
     @field:Json(name = "yeast")
-    val yeast: String,
+    val yeast: String?,
 )

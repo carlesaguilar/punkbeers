@@ -4,9 +4,9 @@ import com.squareup.moshi.Json
 
 data class BeerDto(
     @field:Json(name = "abv")
-    val abv: Double,
+    val abv: Double?,
     @field:Json(name = "attenuation_level")
-    val attenuation_level: Double,
+    val attenuation_level: Double?,
     @field:Json(name = "boil_volume")
     val boil_volume: BoilVolumeDto,
     @field:Json(name = "brewers_tips")
@@ -40,9 +40,9 @@ data class BeerDto(
     @field:Json(name = "tagline")
     val tagline: String,
     @field:Json(name = "target_fg")
-    val target_fg: Double,
+    val target_fg: Double?,
     @field:Json(name = "target_og")
-    val target_og: Double,
+    val target_og: Double?,
     @field:Json(name = "volume")
     val volume: VolumeDto,
 )

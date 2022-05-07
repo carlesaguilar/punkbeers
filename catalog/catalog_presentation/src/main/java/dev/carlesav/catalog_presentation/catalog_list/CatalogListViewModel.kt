@@ -21,20 +21,34 @@ class CatalogListViewModel @Inject constructor(
 ) : ViewModel() {
     var state by mutableStateOf(CatalogListState())
 
+    private val paginationInitialPage = 1
+    private val paginationNumPageItems = 25
+
     private var searchJob: Job? = null
 
     init {
-        getBeers(state.searchQuery)
+        getBeers()
     }
 
-    private fun getBeers(query: String) {
-        getBeersUseCase(query).onEach { result ->
+    @Synchronized
+    private fun getBeers() {
+        getBeersUseCase(state.searchQuery, state.page).onEach { result ->
             state = when (result) {
                 is Resource.Loading -> {
                     state.copy(isLoading = result.isLoading)
                 }
                 is Resource.Success -> {
-                    state.copy(items = result.data ?: emptyList())
+                    val retrievedItems = result.data ?: emptyList()
+                    val noMoreItems = retrievedItems.size < paginationNumPageItems
+                    if (state.onQueryChange) {
+                        state.copy(onQueryChange = false,
+                            items = retrievedItems,
+                            noMoreItems = noMoreItems)
+                    } else {
+                        state.copy(items = state.items + retrievedItems,
+                            endReached = false,
+                            noMoreItems = noMoreItems)
+                    }
                 }
                 is Resource.Error -> {
                     state.copy(error = result.message.toString())
@@ -43,14 +57,30 @@ class CatalogListViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
+    @Synchronized
     fun onEvent(event: CatalogListEvents) {
         when (event) {
             is CatalogListEvents.OnSearchQueryChange -> {
                 searchJob?.cancel()
                 searchJob = viewModelScope.launch {
                     delay(500L)
-                    getBeers(event.query)
+                    state = state.copy(
+                        items = emptyList(),
+                        searchQuery = event.query,
+                        onQueryChange = true,
+                        page = paginationInitialPage,
+                        noMoreItems = false,
+                        endReached = false
+                    )
+                    getBeers()
                 }
+            }
+            CatalogListEvents.LoadMore -> {
+                if (state.noMoreItems || state.isLoading) {
+                    return
+                }
+                state = state.copy(endReached = true, page = state.page + 1)
+                getBeers()
             }
         }
     }

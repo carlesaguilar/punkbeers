@@ -1,10 +1,10 @@
 package dev.carlesav.catalog_presentation.catalog_list.components
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import android.util.Log
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -12,15 +12,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import dev.carlesav.catalog_domain.model.Beer
+import androidx.compose.ui.unit.dp
+import dev.carlesav.catalog_presentation.catalog_list.CatalogListState
 import dev.carlesav.core_ui.LocalSpacing
 
 @Composable
-fun CatalogItems(items: List<Beer>) {
+fun CatalogItems(
+    state: CatalogListState,
+    endReached: (Boolean) -> Unit,
+) {
     val spacing = LocalSpacing.current
+    val listState = rememberLazyListState()
 
-    if (items.isNotEmpty()) {
+    if (state.items.isNotEmpty()) {
         LazyColumn(
+            state = listState,
             modifier = Modifier
                 .fillMaxSize()
                 .padding(
@@ -30,9 +36,25 @@ fun CatalogItems(items: List<Beer>) {
                     end = spacing.spaceExtraSmall
                 )
         ) {
-            items(items.count()) { index ->
-                CatalogItem(item = items[index]) {
+            items(state.items.count()) { index ->
+                if (index == state.items.size - 1 && !state.endReached) {
+                    Log.d("XXX", "*** endReached")
+                    endReached(true)
+                }
+                CatalogItem(item = state.items[index]) {
                     // todo click
+                }
+            }
+            item {
+                if (state.isLoading) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp),
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
                 }
             }
         }

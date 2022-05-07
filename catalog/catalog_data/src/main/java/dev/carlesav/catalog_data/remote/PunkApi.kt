@@ -11,8 +11,13 @@ interface PunkApi {
     }
 
     @GET(CATALOG_LIST)
-    suspend fun getBeers(): Response<List<BeerDto>>
+    suspend fun getBeers(
+        @Query("page") page: Int,
+    ): Response<List<BeerDto>>
 
     @GET(CATALOG_LIST)
-    suspend fun searchBeers(@Query("beer_name") name: String): Response<List<BeerDto>>
+    suspend fun searchBeers(
+        @Query("beer_name") name: String,
+        @Query("page") page: Int,
+    ): Response<List<BeerDto>>
 }

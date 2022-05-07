@@ -13,7 +13,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import dev.carlesav.catalog_presentation.catalog_list.components.CatalogItems
 import dev.carlesav.catalog_presentation.catalog_list.components.SearchBar
 import dev.carlesav.catalog_presentation.components.ErrorComponent
-import dev.carlesav.catalog_presentation.components.LoadingComponent
 
 @Composable
 fun CatalogListScreen(
@@ -33,21 +32,20 @@ fun CatalogListScreen(
             }
         }
     ) {
-
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .background(Color.DarkGray),
         ) {
             when {
-                state.isLoading -> {
-                    LoadingComponent(modifier = Modifier.fillMaxSize())
-                }
                 state.error.isNotEmpty() -> {
                     ErrorComponent(message = state.error)
                 }
                 else -> {
-                    CatalogItems(state.items)
+                    CatalogItems(state,
+                        endReached = {
+                            viewModel.onEvent(CatalogListEvents.LoadMore)
+                        })
                 }
             }
         }

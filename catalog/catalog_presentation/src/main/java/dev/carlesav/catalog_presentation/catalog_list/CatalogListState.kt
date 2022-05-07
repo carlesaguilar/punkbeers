@@ -7,4 +7,8 @@ data class CatalogListState(
     val isLoading: Boolean = false,
     val searchQuery: String = "",
     val error: String = "",
+    val onQueryChange: Boolean = false,
+    val noMoreItems: Boolean = false,
+    val endReached: Boolean = false,
+    val page: Int = 1,
 )

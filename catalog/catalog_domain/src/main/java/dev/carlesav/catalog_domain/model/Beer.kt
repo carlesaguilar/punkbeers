@@ -2,8 +2,8 @@ package dev.carlesav.catalog_domain.model
 
 
 data class Beer(
-    val abv: Double,
-    val attenuation_level: Double,
+    val abv: Double?,
+    val attenuation_level: Double?,
     val boil_volume: BoilVolume,
     val brewers_tips: String,
     val contributed_by: String,
@@ -20,7 +20,7 @@ data class Beer(
     val ph: Double?,
     val srm: Double?,
     val tagline: String,
-    val target_fg: Double,
-    val target_og: Double,
+    val target_fg: Double?,
+    val target_og: Double?,
     val volume: Volume,
 )
