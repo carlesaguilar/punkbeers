@@ -10,15 +10,15 @@ data class BeerDto(
     @field:Json(name = "boil_volume")
     val boil_volume: BoilVolumeDto,
     @field:Json(name = "brewers_tips")
-    val brewers_tips: String,
+    val brewers_tips: String?,
     @field:Json(name = "contributed_by")
-    val contributed_by: String,
+    val contributed_by: String?,
     @field:Json(name = "description")
     val description: String,
     @field:Json(name = "ebc")
     val ebc: Double?,
     @field:Json(name = "first_brewed")
-    val first_brewed: String,
+    val first_brewed: String?,
     @field:Json(name = "food_pairing")
     val food_pairing: List<String>,
     @field:Json(name = "ibu")
@@ -38,7 +38,7 @@ data class BeerDto(
     @field:Json(name = "srm")
     val srm: Double?,
     @field:Json(name = "tagline")
-    val tagline: String,
+    val tagline: String?,
     @field:Json(name = "target_fg")
     val target_fg: Double?,
     @field:Json(name = "target_og")

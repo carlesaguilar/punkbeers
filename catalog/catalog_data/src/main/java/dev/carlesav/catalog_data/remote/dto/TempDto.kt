@@ -4,7 +4,7 @@ import com.squareup.moshi.Json
 
 data class TempDto(
     @field:Json(name = "unit")
-    val unit: String,
+    val unit: String?,
     @field:Json(name = "value")
     val value: Int?,
 )
