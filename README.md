@@ -1,4 +1,4 @@
-# Marvel Characters App
+# Punk Beers App
 
 Aplicación desarrollada en Kotlin usando en los principios de Clean Architecture, para mostrar el
 listado cervezas, se utiliza la API de punkapi.com y también es posible consultar el detalle de cada
