@@ -41,7 +41,7 @@ fun CatalogItems(
                 if (index == state.items.size - 1 && !state.endReached) {
                     endReached(true)
                 }
-                CatalogItem(item = state.items[index]) { beer ->
+                CatalogItem(beer = state.items[index]) { beer ->
                     onItemClick(beer)
                 }
             }

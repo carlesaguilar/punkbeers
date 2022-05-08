@@ -1,5 +1,8 @@
 package dev.carlesav.catalog_presentation.catalog_list.components
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
@@ -21,6 +24,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import dev.carlesav.core.R
 
@@ -60,4 +64,15 @@ fun SearchBar(onQueryChange: (String) -> Unit) {
             focusedIndicatorColor = Color.Transparent
         )
     )
+}
+
+@Preview
+@Composable
+fun PreviewSearchBar() {
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .background(color = Color.White)) {
+
+        SearchBar(onQueryChange = {})
+    }
 }
