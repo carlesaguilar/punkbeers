@@ -60,7 +60,7 @@ class CatalogDetailViewModelTest {
     }
 
     @Test
-    fun `test character detail viewmodel, search character, return data`() = runTest {
+    fun `test catalog detail viewmodel, search beer, return data`() = runTest {
         val beer = Beer(
             id = 1,
             name = "Beer",
