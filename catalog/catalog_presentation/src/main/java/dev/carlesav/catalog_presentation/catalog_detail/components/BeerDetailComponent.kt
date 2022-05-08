@@ -9,6 +9,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -38,7 +39,8 @@ fun BeerDetailComponent(beer: Beer) {
         Spacer(modifier = Modifier.height(spacing.spaceMedium))
 
         Text(text = beer.name,
-            style = MaterialTheme.typography.h4)
+            style = MaterialTheme.typography.h4,
+            modifier = Modifier.testTag(beer.name))
         Spacer(modifier = Modifier.height(spacing.spaceMedium))
 
         Text(
