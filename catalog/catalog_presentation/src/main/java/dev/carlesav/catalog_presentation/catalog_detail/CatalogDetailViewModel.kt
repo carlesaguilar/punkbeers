@@ -6,7 +6,6 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.carlesav.catalog_domain.model.Beer
 import dev.carlesav.catalog_domain.use_case.GetBeerDetailUseCase
 import dev.carlesav.core.util.Resource
 import kotlinx.coroutines.flow.launchIn
@@ -15,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CatalogDetailViewModel @Inject constructor(
-    private val getBeerDetailUseCase: GetBeerDetailUseCase<Beer>,
+    private val getBeerDetailUseCase: GetBeerDetailUseCase,
 ) : ViewModel() {
 
     var state by mutableStateOf(CatalogDetailState())
