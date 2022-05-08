@@ -42,13 +42,19 @@ class CatalogListViewModel @Inject constructor(
                     val retrievedItems = result.data ?: emptyList()
                     val noMoreItems = retrievedItems.size < paginationNumPageItems
                     if (state.onQueryChange) {
-                        state.copy(onQueryChange = false,
+                        state.copy(
+                            firstLoadCompleted = true,
+                            onQueryChange = false,
                             items = retrievedItems,
-                            noMoreItems = noMoreItems)
+                            noMoreItems = noMoreItems
+                        )
                     } else {
-                        state.copy(items = state.items + retrievedItems,
+                        state.copy(
+                            firstLoadCompleted = true,
+                            items = state.items + retrievedItems,
                             endReached = false,
-                            noMoreItems = noMoreItems)
+                            noMoreItems = noMoreItems
+                        )
                     }
                 }
                 is Resource.Error -> {
@@ -66,6 +72,7 @@ class CatalogListViewModel @Inject constructor(
                 searchJob = viewModelScope.launch {
                     delay(500L)
                     state = state.copy(
+                        firstLoadCompleted = false,
                         items = emptyList(),
                         searchQuery = event.query,
                         onQueryChange = true,

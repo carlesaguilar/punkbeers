@@ -14,6 +14,7 @@ import dev.carlesav.catalog_domain.model.Beer
 import dev.carlesav.catalog_presentation.catalog_list.components.CatalogItems
 import dev.carlesav.catalog_presentation.catalog_list.components.SearchBar
 import dev.carlesav.catalog_presentation.components.ErrorComponent
+import dev.carlesav.catalog_presentation.components.LoadingComponent
 
 @Composable
 fun CatalogListScreen(
@@ -40,6 +41,9 @@ fun CatalogListScreen(
                 .background(Color.DarkGray),
         ) {
             when {
+                !state.firstLoadCompleted -> {
+                    LoadingComponent(modifier = Modifier.fillMaxSize())
+                }
                 state.error.isNotEmpty() -> {
                     ErrorComponent(message = state.error)
                 }
