@@ -72,7 +72,7 @@ fun MashTempDto.toMashTemp() = MashTemp(
 fun MethodDto.toMethod() = Method(
     fermentation = this.fermentation.toFermentation(),
     mash_temp = this.mash_temp.map { it.toMashTemp() },
-    twist = this.twist ?: ""
+    twist = this.twist
 )
 
 fun VolumeDto.toVolume() = Volume(
