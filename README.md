@@ -15,8 +15,8 @@ directorios.
 
 También se hace uso de *usecases* para conectar la capa de presentation con la de domain.
 
-Además se incluyen distintos tests unitarios que comprueban el correcto funcionamiento de los *
-mappers*, llamadas de retrofit, *viewmodels* y test *end to end* con espresso para validar la ui
+Además se incluyen distintos tests unitarios que comprueban el correcto funcionamiento de los
+*mappers*, llamadas de retrofit, *viewmodels* y test *end to end* con espresso para validar la ui
 simulando la navegación del usuario en un emulador.
 
 ## Librerías y tecnologías utilizadas
