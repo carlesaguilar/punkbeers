@@ -2,4 +2,6 @@
     <string name="app_name">PunkBeers</string>
     <string name="search_placeholder">Search…</string>
     <string name="no_results">No results</string>
+    <string name="food_pairing">Food pairing</string>
+    <string name="brewers_tips">Brewers tips</string>
 </resources>

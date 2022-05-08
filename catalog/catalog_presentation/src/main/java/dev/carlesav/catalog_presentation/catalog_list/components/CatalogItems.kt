@@ -1,6 +1,5 @@
 package dev.carlesav.catalog_presentation.catalog_list.components
 
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -40,7 +39,6 @@ fun CatalogItems(
         ) {
             items(state.items.count()) { index ->
                 if (index == state.items.size - 1 && !state.endReached) {
-                    Log.d("XXX", "*** endReached")
                     endReached(true)
                 }
                 CatalogItem(item = state.items[index]) { beer ->

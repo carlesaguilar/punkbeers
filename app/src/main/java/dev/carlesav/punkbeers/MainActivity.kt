@@ -48,7 +48,9 @@ class MainActivity : ComponentActivity() {
                             )
                         ) {
                             val itemId = it.arguments?.getInt("itemId")!!
-                            CatalogDetailScreen(beerId = itemId)
+                            CatalogDetailScreen(beerId = itemId) {
+                                navController.navigateUp()
+                            }
                         }
                     }
                 }

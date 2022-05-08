@@ -22,6 +22,7 @@ import dev.carlesav.catalog_presentation.components.LoadingComponent
 fun CatalogDetailScreen(
     viewModel: CatalogDetailViewModel = hiltViewModel(),
     beerId: Int,
+    onBackPressed: () -> Unit,
 ) {
     LaunchedEffect(key1 = LocalContext) {
         viewModel.getBeerDetail(beerId)
@@ -35,7 +36,7 @@ fun CatalogDetailScreen(
         scaffoldState = scaffoldState,
         topBar = {
             IconButton(onClick = {
-                // todo: back
+                onBackPressed()
             }) {
                 Icon(imageVector = Icons.Default.ArrowBack,
                     contentDescription = "",
@@ -44,8 +45,7 @@ fun CatalogDetailScreen(
         }
     ) {
         Box(
-            modifier = Modifier
-                .fillMaxSize(),
+            modifier = Modifier.fillMaxSize(),
         ) {
             when {
                 state.isLoading -> {
