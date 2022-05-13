@@ -1,25 +1,24 @@
 # Punk Beers App
 
-Aplicación desarrollada en Kotlin usando en los principios de Clean Architecture, para mostrar el
-listado cervezas, se utiliza la API de punkapi.com y también es posible consultar el detalle de cada
-cerveza, y consultar cervezas por nombre.
+Application developed in Kotlin using Clean Architecture principles.
 
-## Detalles de la arquitectura
+The punkapi.com API is used to show the list of beers with paging, search by name and detail of each
+beer.
 
-Para el desarrollo de esta aplicación se ha dividido en módulos, *app* y *catalog*, este último
-módulo a su vez está dividido en distintos submódulos: *data*, *domain* y *presentation*, de esta
-manera se puede utilizar el módulo en otras aplicaciones, o por ejemplo si se hiciera una pantalla
-de *configuración* con idioma u otras características, es más fácil reusarlo en otros proyectos ya
-que es suficiente con mover o copiar el módulo a otra aplicación y mantener la estructura de
-directorios.
+## Architecture details
 
-También se hace uso de *usecases* para conectar la capa de presentation con la de domain.
+For the development of this application, it has been divided into modules, *app* and *catalog*, this
+latest module is divided into different submodules: *data*, *domain* and *presentation*, in this way
+you can move easily the module to other applications, or for example if you made a screen of *
+configuration* with language and other features, it's easy to reuse it in other projects moving the
+module to another application and keeping the structure of directories.
 
-Además se incluyen distintos tests unitarios que comprueban el correcto funcionamiento de los
-*mappers*, llamadas de retrofit, *viewmodels* y test *end to end* con espresso para validar la ui
-simulando la navegación del usuario en un emulador.
+*usecases* are used to connect the presentation layer with the domain layer.
 
-## Librerías y tecnologías utilizadas
+In addition, different unit tests are included to test mappers, retrofit calls, viewmodels and end
+to end tests with espresso to validate the ui simulating user navigation in an emulator.
+
+## Used libraries
 
 - MVVM & Viewmodel
 - Coroutinas
@@ -33,3 +32,17 @@ simulando la navegación del usuario en un emulador.
 - Coil
 - Moshi
 - Android Navigation Component
+-
+
+## Screenshots
+
+ <table>
+  <tr>
+     <td>List Screen with paging and search</td>
+     <td>Details Screen</td>
+  </tr>
+  <tr>
+    <td><img src="https://raw.githubusercontent.com/carlesaguilar/punkbeers/master/screenshots/list.png" height=500></td>
+    <td><img src="https://raw.githubusercontent.com/carlesaguilar/punkbeers/master/screenshots/detail.png" height=500></td>
+  </tr>
+ </table>
