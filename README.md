@@ -32,14 +32,13 @@ to end tests with espresso to validate the ui simulating user navigation in an e
 - Coil
 - Moshi
 - Android Navigation Component
--
 
 ## Screenshots
 
  <table>
   <tr>
-     <td>List Screen with paging and search</td>
-     <td>Details Screen</td>
+     <td>List screen with paging and search</td>
+     <td>Details screen</td>
   </tr>
   <tr>
     <td><img src="https://raw.githubusercontent.com/carlesaguilar/punkbeers/master/screenshots/list.png" height=500></td>
