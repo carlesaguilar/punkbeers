@@ -42,6 +42,7 @@ android {
 dependencies {
     kapt DaggerHilt.hiltCompiler
     implementation DaggerHilt.hiltAndroid
+    implementation ArrowKt.arrowCore
 
     testImplementation Testing.junit4
     testImplementation Testing.junitAndroidExt

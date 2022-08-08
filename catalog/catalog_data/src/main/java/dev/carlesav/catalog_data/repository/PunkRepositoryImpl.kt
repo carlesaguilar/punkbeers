@@ -1,8 +1,12 @@
 package dev.carlesav.catalog_data.repository
 
+import arrow.core.Either
+import arrow.core.left
+import arrow.core.right
 import dev.carlesav.catalog_data.remote.PunkApi
 import dev.carlesav.catalog_data.remote.mapper.toBeer
 import dev.carlesav.catalog_domain.model.Beer
+import dev.carlesav.catalog_domain.model.FailureBo
 import dev.carlesav.catalog_domain.repository.PunkRepository
 import dev.carlesav.core.util.Resource
 import kotlinx.coroutines.flow.Flow
@@ -12,22 +16,20 @@ import org.json.JSONObject
 class PunkRepositoryImpl(
     private val api: PunkApi,
 ) : PunkRepository {
-    override fun getBeers(query: String, page: Int): Flow<Resource<List<Beer>>> = flow {
-        emit(Resource.Loading(isLoading = true))
-
+    override suspend fun getBeers(query: String, page: Int): Either<FailureBo, List<Beer>> {
         val response = if (query.isEmpty()) {
             api.getBeers(page)
         } else {
             api.searchBeers(query, page)
         }
-        emit(Resource.Loading(isLoading = false))
-        if (response.isSuccessful) {
+
+        return if (response.isSuccessful) {
             val responseMap = response.body()?.map { it.toBeer() } ?: emptyList()
-            emit(Resource.Success(responseMap))
+            responseMap.right()
         } else {
             val jsonError = JSONObject(response.errorBody()?.string())
             val message = "${jsonError.get("error")}: ${jsonError.get("message")}"
-            emit(Resource.Error(message))
+            FailureBo(message).left()
         }
     }
 

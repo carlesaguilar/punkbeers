@@ -7,11 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.carlesav.catalog_domain.use_case.GetBeersUseCase
-import dev.carlesav.core.util.Resource
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -32,35 +29,32 @@ class CatalogListViewModel @Inject constructor(
 
     @Synchronized
     private fun getBeers() {
-        getBeersUseCase(state.searchQuery, state.page).onEach { result ->
-            state = when (result) {
-                is Resource.Loading -> {
-                    state.copy(isLoading = result.isLoading)
+        viewModelScope.launch {
+            state = state.copy(isLoading = true)
+            getBeersUseCase(state.searchQuery, state.page).fold({ error ->
+                state = state.copy(
+                    isLoading = false,
+                    error = error.message
+                )
+            }, { beersList ->
+                val noMoreItems = beersList.size < paginationNumPageItems
+                state = if (state.onQueryChange) {
+                    state.copy(
+                        firstLoadCompleted = true,
+                        onQueryChange = false,
+                        items = beersList,
+                        noMoreItems = noMoreItems
+                    )
+                } else {
+                    state.copy(
+                        firstLoadCompleted = true,
+                        items = state.items + beersList,
+                        endReached = false,
+                        noMoreItems = noMoreItems
+                    )
                 }
-                is Resource.Success -> {
-                    val retrievedItems = result.data ?: emptyList()
-                    val noMoreItems = retrievedItems.size < paginationNumPageItems
-                    if (state.onQueryChange) {
-                        state.copy(
-                            firstLoadCompleted = true,
-                            onQueryChange = false,
-                            items = retrievedItems,
-                            noMoreItems = noMoreItems
-                        )
-                    } else {
-                        state.copy(
-                            firstLoadCompleted = true,
-                            items = state.items + retrievedItems,
-                            endReached = false,
-                            noMoreItems = noMoreItems
-                        )
-                    }
-                }
-                is Resource.Error -> {
-                    state.copy(error = result.message.toString())
-                }
-            }
-        }.launchIn(viewModelScope)
+            })
+        }
     }
 
     @Synchronized

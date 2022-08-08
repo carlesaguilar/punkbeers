@@ -1,9 +1,9 @@
 package dev.carlesav.catalog_domain.use_case
 
+import arrow.core.Either
 import dev.carlesav.catalog_domain.model.Beer
-import dev.carlesav.core.util.Resource
-import kotlinx.coroutines.flow.Flow
+import dev.carlesav.catalog_domain.model.FailureBo
 
 interface GetBeersUseCase {
-    operator fun invoke(query: String, page: Int): Flow<Resource<List<Beer>>>
+    suspend operator fun invoke(query: String, page: Int): Either<FailureBo, List<Beer>>
 }

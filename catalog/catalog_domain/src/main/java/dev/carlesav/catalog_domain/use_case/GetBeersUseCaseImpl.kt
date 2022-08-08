@@ -1,15 +1,14 @@
 package dev.carlesav.catalog_domain.use_case
 
+import arrow.core.Either
 import dev.carlesav.catalog_domain.model.Beer
+import dev.carlesav.catalog_domain.model.FailureBo
 import dev.carlesav.catalog_domain.repository.PunkRepository
-import dev.carlesav.core.util.Resource
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetBeersUseCaseImpl @Inject constructor(
     private val repository: PunkRepository,
 ) : GetBeersUseCase {
-    override fun invoke(query: String, page: Int): Flow<Resource<List<Beer>>> {
-        return repository.getBeers(query = query, page = page)
-    }
+    override suspend fun invoke(query: String, page: Int): Either<FailureBo, List<Beer>> =
+        repository.getBeers(query = query, page = page)
 }
