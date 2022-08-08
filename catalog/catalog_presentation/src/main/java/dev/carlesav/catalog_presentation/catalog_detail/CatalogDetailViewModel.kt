@@ -7,9 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.carlesav.catalog_domain.use_case.GetBeerDetailUseCase
-import dev.carlesav.core.util.Resource
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,18 +18,19 @@ class CatalogDetailViewModel @Inject constructor(
     var state by mutableStateOf(CatalogDetailState())
 
     fun getBeerDetail(beerId: Int) {
-        getBeerDetailUseCase(beerId).onEach { result ->
-            state = when (result) {
-                is Resource.Loading -> {
-                    state.copy(isLoading = result.isLoading)
-                }
-                is Resource.Success -> {
-                    state.copy(beer = result.data)
-                }
-                is Resource.Error -> {
-                    state.copy(error = result.message.toString())
-                }
-            }
-        }.launchIn(viewModelScope)
+        viewModelScope.launch {
+            state = state.copy(isLoading = true)
+            getBeerDetailUseCase(beerId).fold({ error ->
+                state = state.copy(
+                    isLoading = false,
+                    error = error.message
+                )
+            }, { beer ->
+                state = state.copy(
+                    isLoading = false,
+                    beer = beer
+                )
+            })
+        }
     }
 }
