@@ -40,6 +40,7 @@ class CatalogListViewModel @Inject constructor(
                 val noMoreItems = beersList.size < paginationNumPageItems
                 state = if (state.onQueryChange) {
                     state.copy(
+                        isLoading = false,
                         firstLoadCompleted = true,
                         onQueryChange = false,
                         items = beersList,
@@ -47,6 +48,7 @@ class CatalogListViewModel @Inject constructor(
                     )
                 } else {
                     state.copy(
+                        isLoading = false,
                         firstLoadCompleted = true,
                         items = state.items + beersList,
                         endReached = false,
@@ -76,7 +78,7 @@ class CatalogListViewModel @Inject constructor(
                     getBeers()
                 }
             }
-            CatalogListEvents.LoadMore -> {
+            is CatalogListEvents.LoadMore -> {
                 if (state.noMoreItems || state.isLoading) {
                     return
                 }
